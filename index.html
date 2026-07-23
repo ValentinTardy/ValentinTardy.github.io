@@ -200,6 +200,74 @@
     .card, .contact-row a { transition: none; }
   }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  /* ---------- Skills & Languages ---------- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+  }
+  .skill-group { margin-bottom: 26px; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-group h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--navy-500);
+    margin-bottom: 10px;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tags .tag {
+    font-size: 0.8rem;
+    padding: 5px 12px;
+    background: var(--white);
+  }
+
+  .langs-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+    height: fit-content;
+  }
+  .langs-card h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--navy-500);
+    margin-bottom: 18px;
+  }
+  .lang-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .lang-item:last-child { border-bottom: none; }
+  .lang-info { display: flex; align-items: center; gap: 12px; }
+  .flag-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .lang-name { font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+  .lang-level { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+  .lang-dots { display: flex; gap: 5px; flex-shrink: 0; }
+  .lang-dots .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--line);
+  }
+  .lang-dots .dot.filled { background: var(--gold); }
+
+  @media (max-width: 860px) {
+    .skills-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -211,6 +279,7 @@
       <nav class="nav-links">
         <a href="#featured" data-i18n="nav.featured">Projets phares</a>
         <a href="#more" data-i18n="nav.more">Autres projets</a>
+        <a href="#skills" data-i18n="nav.skills">Compétences</a>
         <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
       <button id="lang-toggle" type="button" aria-label="Switch language">EN</button>
@@ -226,11 +295,11 @@
     <h1>Valentin Tardy</h1>
     <div class="role" data-i18n="hero.role">Étudiant ingénieur — Data, ML &amp; Développement logiciel</div>
     <p class="pitch" data-i18n="hero.pitch">
-      Je conçois des logiciels qui résolvent des problèmes concrets. En dernière année d'école
-      d'ingénieur, j'ai développé des projets couvrant l'ingénierie de données, le machine learning,
-      le développement web et l'algorithmique, avec un souci constant de scalabilité, de performance
-      et de bonnes pratiques d'ingénierie. Découvrez ces 9 projets pour voir comment j'aborde les
-      défis techniques et transforme des idées en solutions fonctionnelles.
+      Je conçois des solutions logicielles concrètes, pensées pour durer. En dernière année
+      d'école d'ingénieur, j'ai mené des projets en Data Engineering, machine learning,
+      développement web et algorithmique, toujours avec la même exigence : du code propre,
+      performant et qui tient la charge. Parcourez ces 9 projets pour voir comment je transforme
+      un problème technique en solution qui fonctionne.
     </p>
     <div class="contact-row">
       <a href="mailto:valentin.tardy@etu.uca.fr">✉ valentin.tardy@etu.uca.fr</a>
@@ -276,7 +345,7 @@
         <ul class="highlights">
           <li data-i18n="p1.h1">Ingestion incrémentale de 271k+ enregistrements avec déduplication par empreinte MD5</li>
           <li data-i18n="p1.h2">Architecture Bronze / Silver / Gold avec tables versionnées ACID (Delta Lake)</li>
-          <li data-i18n="p1.h3">Modèle en étoile interrogé via 6 requêtes analytiques SQL sous DuckDB</li>
+          <li data-i18n="p1.h3">Star schema interrogé avec 6 requêtes SQL analytiques sous DuckDB</li>
         </ul>
         <div class="meta">
           <span class="team" data-i18n="p1.team">Groupe de 3 — Gold layer &amp; analytique</span>
@@ -293,7 +362,7 @@
           <span class="tag">XGBoost</span><span class="tag">Keras / ANN</span>
         </div>
         <ul class="highlights">
-          <li data-i18n="p2.h1">Random Forest, SVM, XGBoost et réseau de neurones comparés sur 303 dossiers patients</li>
+          <li data-i18n="p2.h1">Random Forest, SVM, XGBoost et un réseau de neurones (ANN) comparés sur 303 dossiers patients</li>
           <li data-i18n="p2.h2">Meilleur modèle (Random Forest) : 85,25 % accuracy, 87,50 % recall, F1 86,15 %</li>
           <li data-i18n="p2.h3">Analyse d'importance des variables cliniques les plus prédictives</li>
         </ul>
@@ -369,7 +438,7 @@
 
       <div class="mini-card">
         <h3 data-i18n="p6.title">Réservation de salles &amp; équipements ITS</h3>
-        <p class="tagline" data-i18n="p6.tagline">Système de réservation de salles et équipements avec droits par rôle.</p>
+        <p class="tagline" data-i18n="p6.tagline">Système de réservation de salles et équipements avec role-based access control.</p>
         <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">SQL</span></div>
         <div class="meta">
           <span data-i18n="p6.team">Binôme</span>
@@ -411,6 +480,116 @@
   </div>
 </section>
 
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="idx mono">03</span>
+      <div>
+        <h2 data-i18n="sec.skills.title">Compétences</h2>
+        <p class="section-sub" data-i18n="sec.skills.sub">Technologies et outils utilisés à travers les 9 projets ci-dessus, et langues parlées.</p>
+      </div>
+    </div>
+
+    <div class="skills-grid">
+      <div>
+        <div class="skill-group">
+          <h4 data-i18n="skill.languages">Langages de programmation</h4>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">Java</span><span class="tag">C</span>
+            <span class="tag">PHP</span><span class="tag">SQL</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4 data-i18n="skill.data_ml">Data &amp; Machine Learning</h4>
+          <div class="skill-tags">
+            <span class="tag">TensorFlow / Keras</span><span class="tag">scikit-learn</span>
+            <span class="tag">XGBoost</span><span class="tag">PySpark</span>
+            <span class="tag">pandas</span><span class="tag">NumPy</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4 data-i18n="skill.data_storage">Bases de données &amp; Stockage</h4>
+          <div class="skill-tags">
+            <span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">DuckDB</span>
+            <span class="tag">Delta Lake</span><span class="tag">Parquet</span><span class="tag">MinIO</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4 data-i18n="skill.web_backend">Web &amp; Backend</h4>
+          <div class="skill-tags">
+            <span class="tag">FastAPI</span><span class="tag">SDL2</span><span class="tag">HTML / CSS</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4 data-i18n="skill.tools">Outils &amp; Environnement</h4>
+          <div class="skill-tags">
+            <span class="tag">Docker</span><span class="tag">Docker Compose</span><span class="tag">Git</span>
+            <span class="tag">GitHub</span><span class="tag">GitLab CI</span><span class="tag">DBeaver</span>
+            <span class="tag">Google Colab</span><span class="tag">VS Code</span><span class="tag">Linux</span>
+            <span class="tag">Pytest</span><span class="tag">Behave (BDD)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="langs-card">
+        <h4 data-i18n="skill.spoken_languages">Langues parlées</h4>
+        <div class="lang-item">
+          <div class="lang-info">
+            <img class="flag-icon" src="https://flagcdn.com/64x64/fr.png" alt="" width="28" height="28">
+            <div>
+              <div class="lang-name" data-i18n="lang.name.fr">Français</div>
+              <div class="lang-level" data-i18n="lang.native">Langue maternelle</div>
+            </div>
+          </div>
+          <div class="lang-dots">
+            <span class="dot filled"></span><span class="dot filled"></span>
+            <span class="dot filled"></span><span class="dot filled"></span>
+          </div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-info">
+            <img class="flag-icon" src="https://flagcdn.com/64x64/gb.png" alt="" width="28" height="28">
+            <div>
+              <div class="lang-name" data-i18n="lang.name.en">Anglais</div>
+              <div class="lang-level" data-i18n="lang.fluent">Courant</div>
+            </div>
+          </div>
+          <div class="lang-dots">
+            <span class="dot filled"></span><span class="dot filled"></span>
+            <span class="dot filled"></span><span class="dot"></span>
+          </div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-info">
+            <img class="flag-icon" src="https://flagcdn.com/64x64/it.png" alt="" width="28" height="28">
+            <div>
+              <div class="lang-name" data-i18n="lang.name.it">Italien</div>
+              <div class="lang-level" data-i18n="lang.intermediate">Intermédiaire</div>
+            </div>
+          </div>
+          <div class="lang-dots">
+            <span class="dot filled"></span><span class="dot filled"></span>
+            <span class="dot"></span><span class="dot"></span>
+          </div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-info">
+            <img class="flag-icon" src="https://flagcdn.com/64x64/id.png" alt="" width="28" height="28">
+            <div>
+              <div class="lang-name" data-i18n="lang.name.id">Indonésien (Bahasa)</div>
+              <div class="lang-level" data-i18n="lang.beginner">Débutant</div>
+            </div>
+          </div>
+          <div class="lang-dots">
+            <span class="dot filled"></span><span class="dot"></span>
+            <span class="dot"></span><span class="dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer id="contact">
   <div class="wrap foot-inner">
     <div>
@@ -433,7 +612,7 @@
     "nav.contact": { fr: "Contact", en: "Contact" },
     "hero.eyebrow": { fr: "Portfolio — Ingénierie logicielle & données", en: "Portfolio — Software & Data Engineering" },
     "hero.role": { fr: "Étudiant ingénieur — Data, ML & Développement logiciel", en: "Engineering Student — Data, ML & Software Development" },
-    "hero.pitch": { fr: "Je conçois des logiciels qui résolvent des problèmes concrets. En dernière année d'école d'ingénieur, j'ai développé des projets couvrant l'ingénierie de données, le machine learning, le développement web et l'algorithmique, avec un souci constant de scalabilité, de performance et de bonnes pratiques d'ingénierie. Découvrez ces 9 projets pour voir comment j'aborde les défis techniques et transforme des idées en solutions fonctionnelles.", en: "I build software that solves real-world problems. As a final-year engineering student, I've developed projects spanning data engineering, machine learning, web development, and algorithms, with a focus on scalability, performance, and clean engineering practices. Explore these 9 projects to see how I approach technical challenges and transform ideas into working solutions." },
+    "hero.pitch": { fr: "Je conçois des solutions logicielles concrètes, pensées pour durer. En dernière année d'école d'ingénieur, j'ai mené des projets en Data Engineering, machine learning, développement web et algorithmique, toujours avec la même exigence : du code propre, performant et qui tient la charge. Parcourez ces 9 projets pour voir comment je transforme un problème technique en solution qui fonctionne.", en: "I build software that solves real-world problems. As a final-year engineering student, I've developed projects spanning data engineering, machine learning, web development, and algorithms, with a focus on scalability, performance, and clean engineering practices. Explore these 9 projects to see how I approach technical challenges and transform ideas into working solutions." },
     "pipeline.data": { fr: "Data", en: "Data" },
     "pipeline.web": { fr: "Web", en: "Web" },
     "pipeline.systems": { fr: "Systèmes", en: "Systems" },
@@ -446,13 +625,13 @@
     "p1.tagline": { fr: "Pipeline de données bout-en-bout suivant l'architecture Médaillon.", en: "End-to-end data pipeline following the Medallion architecture." },
     "p1.h1": { fr: "Ingestion incrémentale de 271k+ enregistrements avec déduplication par empreinte MD5", en: "Incremental ingestion of 271k+ records with MD5 checksum deduplication" },
     "p1.h2": { fr: "Architecture Bronze / Silver / Gold avec tables versionnées ACID (Delta Lake)", en: "Bronze / Silver / Gold architecture with ACID-versioned tables (Delta Lake)" },
-    "p1.h3": { fr: "Modèle en étoile interrogé via 6 requêtes analytiques SQL sous DuckDB", en: "Star schema queried through 6 SQL analytical queries in DuckDB" },
+    "p1.h3": { fr: "Star schema interrogé avec 6 requêtes SQL analytiques sous DuckDB", en: "Star schema queried through 6 SQL analytical queries in DuckDB" },
     "p1.team": { fr: "Groupe de 3 — Gold layer & analytique", en: "Team of 3 — Gold layer & analytics" },
     "p1.link": { fr: "Repo bientôt en ligne", en: "Repo coming soon" },
 
     "p2.title": { fr: "Prédiction de maladies cardiaques", en: "Heart Disease Prediction" },
     "p2.tagline": { fr: "Comparaison de 4 algorithmes supervisés sur des données cliniques.", en: "Comparing 4 supervised algorithms on clinical data." },
-    "p2.h1": { fr: "Random Forest, SVM, XGBoost et réseau de neurones comparés sur 303 dossiers patients", en: "Random Forest, SVM, XGBoost, and a neural network compared on 303 patient records" },
+    "p2.h1": { fr: "Random Forest, SVM, XGBoost et un réseau de neurones (ANN) comparés sur 303 dossiers patients", en: "Random Forest, SVM, XGBoost, and a neural network compared on 303 patient records" },
     "p2.h2": { fr: "Meilleur modèle (Random Forest) : 85,25 % accuracy, 87,50 % recall, F1 86,15 %", en: "Best model (Random Forest): 85.25% accuracy, 87.50% recall, 86.15% F1-score" },
     "p2.h3": { fr: "Analyse d'importance des variables cliniques les plus prédictives", en: "Feature importance analysis of the most predictive clinical variables" },
     "p2.team": { fr: "Groupe de 5", en: "Team of 5" },
@@ -477,7 +656,7 @@
     "p5.team": { fr: "Solo", en: "Solo project" },
 
     "p6.title": { fr: "Réservation de salles & équipements ITS", en: "ITS Room & Equipment Booking" },
-    "p6.tagline": { fr: "Système de réservation de salles et équipements avec droits par rôle.", en: "Room and equipment booking system with role-based access control." },
+    "p6.tagline": { fr: "Système de réservation de salles et équipements avec role-based access control.", en: "Room and equipment booking system with role-based access control." },
     "p6.team": { fr: "Binôme", en: "Pair project" },
 
     "p7.title": { fr: "Prédiction logK des cyclodextrines", en: "Cyclodextrin logK Prediction" },
@@ -493,7 +672,26 @@
     "p9.team": { fr: "Groupe de 3", en: "Team of 3" },
 
     "repo.soon": { fr: "Repo à venir", en: "Repo coming soon" },
-    "footer.updated": { fr: "Dernière mise à jour — juillet 2026", en: "Last updated — July 2026" }
+    "footer.updated": { fr: "Dernière mise à jour — juillet 2026", en: "Last updated — July 2026" },
+
+    "nav.skills": { fr: "Compétences", en: "Skills" },
+    "sec.skills.title": { fr: "Compétences", en: "Skills" },
+    "sec.skills.sub": { fr: "Stack technique et outils utilisés à travers les 9 projets, et langues parlées.", en: "Tech stack and tools used across the 9 projects, plus spoken languages." },
+    "skill.languages": { fr: "Langages de programmation", en: "Programming Languages" },
+    "skill.data_ml": { fr: "Data & Machine Learning", en: "Data & Machine Learning" },
+    "skill.data_storage": { fr: "Bases de données & Stockage", en: "Databases & Storage" },
+    "skill.web_backend": { fr: "Web & Backend", en: "Web & Backend" },
+    "skill.tools": { fr: "Outils & Environnement", en: "Tools & Environment" },
+    "skill.spoken_languages": { fr: "Langues parlées", en: "Spoken Languages" },
+    "lang.native": { fr: "Langue maternelle", en: "Native" },
+    "lang.fluent": { fr: "Courant", en: "Fluent" },
+    "lang.intermediate": { fr: "Intermédiaire", en: "Intermediate" },
+    "lang.beginner": { fr: "Débutant", en: "Beginner" },
+
+    "lang.name.fr": { fr: "Français", en: "French" },
+    "lang.name.en": { fr: "Anglais", en: "English" },
+    "lang.name.it": { fr: "Italien", en: "Italian" },
+    "lang.name.id": { fr: "Indonésien (Bahasa)", en: "Indonesian (Bahasa)" }
   };
 
   function setLang(lang) {
