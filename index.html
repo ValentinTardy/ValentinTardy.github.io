@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentin Tardy — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-900: #0A1F3D;
+    --navy-800: #0F2A4F;
+    --navy-700: #14345E;
+    --navy-500: #2C5282;
+    --gold: #B8922E;
+    --gold-soft: #E8D9AE;
+    --white: #FFFFFF;
+    --paper: #F6F8FB;
+    --ink: #12203A;
+    --muted: #5C6B82;
+    --line: #E1E7F0;
+    --radius: 10px;
+    --maxw: 1120px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--navy-900);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: inherit; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  header.site-nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(246, 248, 251, 0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 16px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-inner .brand {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+    font-size: 1.05rem; color: var(--navy-900); text-decoration: none;
+  }
+  .nav-right { display: flex; align-items: center; gap: 28px; }
+  .nav-links { display: flex; gap: 28px; font-size: 0.92rem; font-weight: 500; }
+  .nav-links a { text-decoration: none; color: var(--muted); transition: color .15s; }
+  .nav-links a:hover, .nav-links a:focus-visible { color: var(--navy-900); }
+
+  #lang-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--navy-700);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  #lang-toggle:hover, #lang-toggle:focus-visible {
+    background: var(--paper);
+    border-color: var(--navy-500);
+  }
+
+  .hero {
+    background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+    color: var(--white);
+    padding: 88px 0 64px;
+  }
+  .hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+    color: var(--gold-soft); text-transform: uppercase;
+    letter-spacing: 0.12em; margin-bottom: 18px;
+  }
+  .hero h1 {
+    color: var(--white); font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 700; line-height: 1.05;
+  }
+  .hero .role {
+    color: var(--gold-soft); font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-family: 'Space Grotesk', sans-serif; font-weight: 500; margin-top: 10px;
+  }
+  .hero p.pitch {
+    max-width: 620px; color: #C9D4E3; font-size: 1.05rem; margin-top: 22px;
+  }
+  .contact-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+  .contact-row a {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    font-size: 0.92rem; font-weight: 500; color: var(--white);
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+    padding: 9px 16px; border-radius: 999px; transition: background .15s, border-color .15s;
+  }
+  .contact-row a:hover, .contact-row a:focus-visible {
+    background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.32);
+  }
+
+  .pipeline { display: flex; align-items: center; gap: 0; margin-top: 56px; max-width: 520px; }
+  .pipeline .node { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .pipeline .seg { flex: 1; height: 1px; background: rgba(255,255,255,0.22); }
+  .pipeline-labels {
+    display: flex; justify-content: space-between; max-width: 520px; margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #7E8FA8;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  section { padding: 72px 0; }
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+  .section-head .idx { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.85rem; }
+  .section-head h2 { font-size: 1.7rem; font-weight: 600; }
+  .section-sub { color: var(--muted); font-size: 0.98rem; margin-top: 6px; max-width: 560px; }
+
+  .featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .card {
+    background: var(--white); border: 1px solid var(--line);
+    border-left: 3px solid var(--navy-700); border-radius: var(--radius);
+    padding: 28px 28px 24px; display: flex; flex-direction: column;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .card:hover { box-shadow: 0 8px 28px rgba(10, 31, 61, 0.09); transform: translateY(-2px); }
+  .card .badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold);
+    background: rgba(184, 146, 46, 0.1); display: inline-block;
+    padding: 3px 9px; border-radius: 4px; margin-bottom: 14px; width: fit-content;
+  }
+  .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 6px; }
+  .card .tagline { color: var(--muted); font-size: 0.94rem; margin-bottom: 16px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; background: var(--paper);
+    border: 1px solid var(--line); color: var(--navy-700); padding: 3px 9px; border-radius: 5px;
+  }
+  .card ul.highlights { margin: 0 0 18px; padding-left: 18px; font-size: 0.92rem; color: var(--ink); }
+  .card ul.highlights li { margin-bottom: 6px; }
+  .card .meta {
+    margin-top: auto; display: flex; justify-content: space-between; align-items: center;
+    padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.86rem;
+  }
+  .card .team { color: var(--muted); }
+  .card .links { display: flex; gap: 14px; }
+  .card .links a { text-decoration: none; font-weight: 600; color: var(--navy-700); border-bottom: 1px solid transparent; }
+  .card .links a:hover, .card .links a:focus-visible { border-bottom-color: var(--navy-700); }
+  .card .links a.disabled { color: var(--muted); font-weight: 500; font-style: italic; cursor: default; }
+
+  .more-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .mini-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .mini-card h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: 6px; }
+  .mini-card .tagline { color: var(--muted); font-size: 0.87rem; margin-bottom: 12px; }
+  .mini-card .tags { margin-bottom: 12px; }
+  .mini-card .tag { font-size: 0.68rem; }
+  .mini-card .meta {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 12px; border-top: 1px solid var(--line); font-size: 0.8rem; color: var(--muted);
+  }
+  .mini-card .links a { text-decoration: none; font-weight: 600; color: var(--navy-700); }
+  .mini-card .links a.disabled { color: var(--muted); font-weight: 500; font-style: italic; }
+
+  footer { background: var(--navy-900); color: #B7C3D6; padding: 48px 0 32px; }
+  footer .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  footer .brand { color: var(--white); font-family: 'Space Grotesk', sans-serif; font-weight: 600; }
+  footer .foot-links { display: flex; gap: 20px; font-size: 0.9rem; }
+  footer .foot-links a { text-decoration: none; color: #B7C3D6; }
+  footer .foot-links a:hover { color: var(--white); }
+  footer .note { margin-top: 24px; font-size: 0.78rem; color: #5E6E88; }
+
+  @media (max-width: 860px) {
+    .featured-grid { grid-template-columns: 1fr; }
+    .more-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 560px) {
+    .more-grid { grid-template-columns: 1fr; }
+    .hero { padding: 64px 0 48px; }
+    .wrap { padding: 0 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .card, .contact-row a { transition: none; }
+  }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">VT</a>
+    <div class="nav-right">
+      <nav class="nav-links">
+        <a href="#featured" data-i18n="nav.featured">Projets phares</a>
+        <a href="#more" data-i18n="nav.more">Autres projets</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <button id="lang-toggle" type="button" aria-label="Switch language">EN</button>
+    </div>
+  </div>
+</header>
+
+<div id="top"></div>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow" data-i18n="hero.eyebrow">Portfolio — Ingénierie logicielle &amp; données</div>
+    <h1>Valentin Tardy</h1>
+    <div class="role" data-i18n="hero.role">Étudiant ingénieur — Data, ML &amp; Développement logiciel</div>
+    <p class="pitch" data-i18n="hero.pitch">
+      Dernière année d'école d'ingénieur, à la recherche de missions freelance en développement
+      et data. Ci-dessous, une sélection de 9 projets couvrant l'ingénierie de données, le machine
+      learning, le développement web et l'algorithmique.
+    </p>
+    <div class="contact-row">
+      <a href="mailto:ton.email@exemple.com">✉ ton.email@exemple.com</a>
+      <a href="https://github.com/ValentinTardy" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/ton-profil" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+
+    <div class="pipeline" aria-hidden="true">
+      <div class="node"></div><div class="seg"></div>
+      <div class="node"></div><div class="seg"></div>
+      <div class="node"></div><div class="seg"></div>
+      <div class="node"></div>
+    </div>
+    <div class="pipeline-labels" aria-hidden="true">
+      <span data-i18n="pipeline.data">Data</span>
+      <span>ML</span>
+      <span data-i18n="pipeline.web">Web</span>
+      <span data-i18n="pipeline.systems">Systèmes</span>
+    </div>
+  </div>
+</section>
+
+<section id="featured">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="idx mono">01</span>
+      <div>
+        <h2 data-i18n="sec.featured.title">Projets phares</h2>
+        <p class="section-sub" data-i18n="sec.featured.sub">Les réalisations les plus représentatives, du pipeline de données à l'application conteneurisée.</p>
+      </div>
+    </div>
+
+    <div class="featured-grid">
+
+      <article class="card">
+        <span class="badge" data-i18n="p1.badge">Data Engineering</span>
+        <h3>Olympic Data Lakehouse</h3>
+        <p class="tagline" data-i18n="p1.tagline">Pipeline de données bout-en-bout suivant l'architecture Médaillon.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">DuckDB</span>
+          <span class="tag">Delta Lake</span><span class="tag">Parquet</span><span class="tag">MinIO</span>
+        </div>
+        <ul class="highlights">
+          <li data-i18n="p1.h1">Ingestion incrémentale de 271k+ enregistrements avec déduplication par empreinte MD5</li>
+          <li data-i18n="p1.h2">Architecture Bronze / Silver / Gold avec tables versionnées ACID (Delta Lake)</li>
+          <li data-i18n="p1.h3">Modèle en étoile interrogé via 6 requêtes analytiques SQL sous DuckDB</li>
+        </ul>
+        <div class="meta">
+          <span class="team" data-i18n="p1.team">Groupe de 3 — Gold layer &amp; analytique</span>
+          <span class="links"><a class="disabled" data-i18n="p1.link">Repo bientôt en ligne</a></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge">Machine Learning</span>
+        <h3 data-i18n="p2.title">Prédiction de maladies cardiaques</h3>
+        <p class="tagline" data-i18n="p2.tagline">Comparaison de 4 algorithmes supervisés sur des données cliniques.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">scikit-learn</span>
+          <span class="tag">XGBoost</span><span class="tag">Keras / ANN</span>
+        </div>
+        <ul class="highlights">
+          <li data-i18n="p2.h1">Random Forest, SVM, XGBoost et réseau de neurones comparés sur 303 dossiers patients</li>
+          <li data-i18n="p2.h2">Meilleur modèle (Random Forest) : 85,25 % accuracy, 87,50 % recall, F1 86,15 %</li>
+          <li data-i18n="p2.h3">Analyse d'importance des variables cliniques les plus prédictives</li>
+        </ul>
+        <div class="meta">
+          <span class="team" data-i18n="p2.team">Groupe de 5</span>
+          <span class="links"><a href="https://github.com/WanzyWM/Heart-Disease-Prediction-Machine-Learning-Final-Project" target="_blank" rel="noopener">GitHub →</a></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge">Deep Learning</span>
+        <h3 data-i18n="p3.title">Classification de lésions cutanées</h3>
+        <p class="tagline" data-i18n="p3.tagline">CNN entraîné from scratch vs. transfer learning sur images dermatoscopiques.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">TensorFlow / Keras</span>
+          <span class="tag">CNN</span><span class="tag">MobileNetV2</span>
+        </div>
+        <ul class="highlights">
+          <li data-i18n="p3.h1">Classification multi-classe (7 catégories) sur le dataset HAM10000 — 10 015 images</li>
+          <li data-i18n="p3.h2">CNN custom : 79,97 % accuracy, malgré un fort déséquilibre de classes (nv : 67 %)</li>
+          <li data-i18n="p3.h3">Pipeline complet : augmentation de données, évaluation multi-métriques, matrices de confusion</li>
+        </ul>
+        <div class="meta">
+          <span class="team" data-i18n="p3.team">Groupe de 3</span>
+          <span class="links"><a href="https://github.com/ValentinTardy/skin-lesion-dl" target="_blank" rel="noopener">GitHub →</a></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge" data-i18n="p4.badge">Développement Web</span>
+        <h3 data-i18n="p4.title">Site e-commerce de jeux vidéo</h3>
+        <p class="tagline" data-i18n="p4.tagline">Boutique en ligne conteneurisée avec panier et TVA dynamique.</p>
+        <div class="tags">
+          <span class="tag">PHP</span><span class="tag">MySQL</span>
+          <span class="tag">Docker</span><span class="tag">HTML / CSS</span>
+        </div>
+        <ul class="highlights">
+          <li data-i18n="p4.h1">Architecture en couches stricte (PHP / CSS séparés), requêtes préparées contre les injections SQL</li>
+          <li data-i18n="p4.h2">Déploiement multi-conteneurs (application + base de données) via Docker Compose</li>
+          <li data-i18n="p4.h3">Calcul de TVA dynamique par jointure SQL plutôt que valeurs codées en dur</li>
+        </ul>
+        <div class="meta">
+          <span class="team" data-i18n="p4.team">Binôme</span>
+          <span class="links"><a class="disabled" data-i18n="p4.link">Repo bientôt public</a></span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="more" style="background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="idx mono">02</span>
+      <div>
+        <h2 data-i18n="sec.more.title">Autres projets</h2>
+        <p class="section-sub" data-i18n="sec.more.sub">Travaux complémentaires en bases de données, data science, architecture logicielle et algorithmique.</p>
+      </div>
+    </div>
+
+    <div class="more-grid">
+
+      <div class="mini-card">
+        <h3>Tic-Tac-Toe Java</h3>
+        <p class="tagline" data-i18n="p5.tagline">Jeu avec système de login et statistiques persistées.</p>
+        <div class="tags"><span class="tag">Java Swing</span></div>
+        <div class="meta">
+          <span data-i18n="p5.team">Solo</span>
+          <span class="links"><a href="https://github.com/ValentinTardy/tic-tac-toe-java" target="_blank" rel="noopener">GitHub →</a></span>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <h3 data-i18n="p6.title">Réservation de salles &amp; équipements ITS</h3>
+        <p class="tagline" data-i18n="p6.tagline">Système de réservation de salles et équipements avec droits par rôle.</p>
+        <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">SQL</span></div>
+        <div class="meta">
+          <span data-i18n="p6.team">Binôme</span>
+          <span class="links"><a class="disabled" data-i18n="repo.soon">Repo à venir</a></span>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <h3 data-i18n="p7.title">Prédiction logK des cyclodextrines</h3>
+        <p class="tagline" data-i18n="p7.tagline">Régression et classification sur descripteurs moléculaires.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span></div>
+        <div class="meta">
+          <span data-i18n="p7.team">Groupe</span>
+          <span class="links"><a class="disabled" data-i18n="repo.soon">Repo à venir</a></span>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <h3 data-i18n="p8.title">Système de gestion des ventes</h3>
+        <p class="tagline" data-i18n="p8.tagline">Pipeline PySpark exposé via API REST, Clean Architecture.</p>
+        <div class="tags"><span class="tag">PySpark</span><span class="tag">FastAPI</span></div>
+        <div class="meta">
+          <span data-i18n="p8.team">Individuel</span>
+          <span class="links"><a class="disabled" data-i18n="repo.soon">Repo à venir</a></span>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <h3 data-i18n="p9.title">Projet ZZ1 — Labyrinthe</h3>
+        <p class="tagline" data-i18n="p9.tagline">Génération de labyrinthes, pathfinding et bot IA en C/SDL2.</p>
+        <div class="tags"><span class="tag">C</span><span class="tag">SDL2</span></div>
+        <div class="meta">
+          <span data-i18n="p9.team">Groupe de 3</span>
+          <span class="links"><a class="disabled" data-i18n="repo.soon">Repo à venir</a></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap foot-inner">
+    <div>
+      <div class="brand">Valentin Tardy</div>
+      <div class="note" style="margin-top:6px;" data-i18n="hero.role">Étudiant ingénieur — Data, ML &amp; Développement logiciel</div>
+    </div>
+    <div class="foot-links">
+      <a href="mailto:ton.email@exemple.com">Email</a>
+      <a href="https://github.com/ValentinTardy" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/ton-profil" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <div class="wrap note" data-i18n="footer.updated">Dernière mise à jour — juillet 2026</div>
+</footer>
+
+<script>
+  const translations = {
+    "nav.featured": { fr: "Projets phares", en: "Featured Projects" },
+    "nav.more": { fr: "Autres projets", en: "More Projects" },
+    "nav.contact": { fr: "Contact", en: "Contact" },
+    "hero.eyebrow": { fr: "Portfolio — Ingénierie logicielle & données", en: "Portfolio — Software & Data Engineering" },
+    "hero.role": { fr: "Étudiant ingénieur — Data, ML & Développement logiciel", en: "Engineering Student — Data, ML & Software Development" },
+    "hero.pitch": { fr: "Dernière année d'école d'ingénieur, à la recherche de missions freelance en développement et data. Ci-dessous, une sélection de 9 projets couvrant l'ingénierie de données, le machine learning, le développement web et l'algorithmique.", en: "Final-year engineering student looking for freelance work in software development and data. Below is a selection of 9 projects spanning data engineering, machine learning, web development, and algorithms." },
+    "pipeline.data": { fr: "Data", en: "Data" },
+    "pipeline.web": { fr: "Web", en: "Web" },
+    "pipeline.systems": { fr: "Systèmes", en: "Systems" },
+    "sec.featured.title": { fr: "Projets phares", en: "Featured Projects" },
+    "sec.featured.sub": { fr: "Les réalisations les plus représentatives, du pipeline de données à l'application conteneurisée.", en: "The most representative work, from data pipelines to containerized applications." },
+    "sec.more.title": { fr: "Autres projets", en: "More Projects" },
+    "sec.more.sub": { fr: "Travaux complémentaires en bases de données, data science, architecture logicielle et algorithmique.", en: "Additional work in databases, data science, software architecture, and algorithms." },
+
+    "p1.badge": { fr: "Data Engineering", en: "Data Engineering" },
+    "p1.tagline": { fr: "Pipeline de données bout-en-bout suivant l'architecture Médaillon.", en: "End-to-end data pipeline following the Medallion architecture." },
+    "p1.h1": { fr: "Ingestion incrémentale de 271k+ enregistrements avec déduplication par empreinte MD5", en: "Incremental ingestion of 271k+ records with MD5 checksum deduplication" },
+    "p1.h2": { fr: "Architecture Bronze / Silver / Gold avec tables versionnées ACID (Delta Lake)", en: "Bronze / Silver / Gold architecture with ACID-versioned tables (Delta Lake)" },
+    "p1.h3": { fr: "Modèle en étoile interrogé via 6 requêtes analytiques SQL sous DuckDB", en: "Star schema queried through 6 SQL analytical queries in DuckDB" },
+    "p1.team": { fr: "Groupe de 3 — Gold layer & analytique", en: "Team of 3 — Gold layer & analytics" },
+    "p1.link": { fr: "Repo bientôt en ligne", en: "Repo coming soon" },
+
+    "p2.title": { fr: "Prédiction de maladies cardiaques", en: "Heart Disease Prediction" },
+    "p2.tagline": { fr: "Comparaison de 4 algorithmes supervisés sur des données cliniques.", en: "Comparing 4 supervised algorithms on clinical data." },
+    "p2.h1": { fr: "Random Forest, SVM, XGBoost et réseau de neurones comparés sur 303 dossiers patients", en: "Random Forest, SVM, XGBoost, and a neural network compared on 303 patient records" },
+    "p2.h2": { fr: "Meilleur modèle (Random Forest) : 85,25 % accuracy, 87,50 % recall, F1 86,15 %", en: "Best model (Random Forest): 85.25% accuracy, 87.50% recall, 86.15% F1-score" },
+    "p2.h3": { fr: "Analyse d'importance des variables cliniques les plus prédictives", en: "Feature importance analysis of the most predictive clinical variables" },
+    "p2.team": { fr: "Groupe de 5", en: "Team of 5" },
+
+    "p3.title": { fr: "Classification de lésions cutanées", en: "Skin Lesion Classification" },
+    "p3.tagline": { fr: "CNN entraîné from scratch vs. transfer learning sur images dermatoscopiques.", en: "Custom CNN vs. transfer learning on dermoscopic images." },
+    "p3.h1": { fr: "Classification multi-classe (7 catégories) sur le dataset HAM10000 — 10 015 images", en: "Multi-class classification (7 categories) on the HAM10000 dataset — 10,015 images" },
+    "p3.h2": { fr: "CNN custom : 79,97 % accuracy, malgré un fort déséquilibre de classes (nv : 67 %)", en: "Custom CNN: 79.97% accuracy, despite severe class imbalance (nv: 67%)" },
+    "p3.h3": { fr: "Pipeline complet : augmentation de données, évaluation multi-métriques, matrices de confusion", en: "Full pipeline: data augmentation, multi-metric evaluation, confusion matrices" },
+    "p3.team": { fr: "Groupe de 3", en: "Team of 3" },
+
+    "p4.badge": { fr: "Développement Web", en: "Web Development" },
+    "p4.title": { fr: "Site e-commerce de jeux vidéo", en: "Video Game E-commerce Site" },
+    "p4.tagline": { fr: "Boutique en ligne conteneurisée avec panier et TVA dynamique.", en: "Containerized online store with cart and dynamic tax calculation." },
+    "p4.h1": { fr: "Architecture en couches stricte (PHP / CSS séparés), requêtes préparées contre les injections SQL", en: "Strict layered architecture (separated PHP/CSS), prepared statements against SQL injection" },
+    "p4.h2": { fr: "Déploiement multi-conteneurs (application + base de données) via Docker Compose", en: "Multi-container deployment (app + database) via Docker Compose" },
+    "p4.h3": { fr: "Calcul de TVA dynamique par jointure SQL plutôt que valeurs codées en dur", en: "Dynamic tax calculation via SQL join instead of hardcoded values" },
+    "p4.team": { fr: "Binôme", en: "Pair project" },
+    "p4.link": { fr: "Repo bientôt public", en: "Repo going public soon" },
+
+    "p5.tagline": { fr: "Jeu avec système de login et statistiques persistées.", en: "Game with login system and persisted statistics." },
+    "p5.team": { fr: "Solo", en: "Solo project" },
+
+    "p6.title": { fr: "Réservation de salles & équipements ITS", en: "ITS Room & Equipment Booking" },
+    "p6.tagline": { fr: "Système de réservation de salles et équipements avec droits par rôle.", en: "Room and equipment booking system with role-based access control." },
+    "p6.team": { fr: "Binôme", en: "Pair project" },
+
+    "p7.title": { fr: "Prédiction logK des cyclodextrines", en: "Cyclodextrin logK Prediction" },
+    "p7.tagline": { fr: "Régression et classification sur descripteurs moléculaires.", en: "Regression and classification on molecular descriptors." },
+    "p7.team": { fr: "Groupe", en: "Team project" },
+
+    "p8.title": { fr: "Système de gestion des ventes", en: "Sales Management System" },
+    "p8.tagline": { fr: "Pipeline PySpark exposé via API REST, Clean Architecture.", en: "PySpark pipeline exposed via REST API, Clean Architecture." },
+    "p8.team": { fr: "Individuel", en: "Individual project" },
+
+    "p9.title": { fr: "Projet ZZ1 — Labyrinthe", en: "Project ZZ1 — Maze" },
+    "p9.tagline": { fr: "Génération de labyrinthes, pathfinding et bot IA en C/SDL2.", en: "Maze generation, pathfinding, and AI bot in C/SDL2." },
+    "p9.team": { fr: "Groupe de 3", en: "Team of 3" },
+
+    "repo.soon": { fr: "Repo à venir", en: "Repo coming soon" },
+    "footer.updated": { fr: "Dernière mise à jour — juillet 2026", en: "Last updated — July 2026" }
+  };
+
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      const key = el.getAttribute('data-i18n');
+      if (translations[key] && translations[key][lang]) {
+        el.textContent = translations[key][lang];
+      }
+    });
+    document.getElementById('lang-toggle').textContent = (lang === 'fr') ? 'EN' : 'FR';
+    try { localStorage.setItem('portfolio-lang', lang); } catch (e) {}
+  }
+
+  let currentLang = 'fr';
+  try { currentLang = localStorage.getItem('portfolio-lang') || 'fr'; } catch (e) {}
+  setLang(currentLang);
+
+  document.getElementById('lang-toggle').addEventListener('click', function() {
+    currentLang = (currentLang === 'fr') ? 'en' : 'fr';
+    setLang(currentLang);
+  });
+</script>
+
+</body>
+</html>
